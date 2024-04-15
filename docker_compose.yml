@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: Ashish22
+      POSTGRES_PASSWORD: Ashish12#
+      POSTGRES_DB: New
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
